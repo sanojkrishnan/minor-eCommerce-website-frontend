@@ -1,8 +1,12 @@
 import React from "react";
 import NavBar from "./Component/NavBar";
-import Home from "./Component/Home";
 import { Route, Routes } from "react-router-dom";
-import NotFound from "./Component/404";
+import Home from "./Pages/Home";
+import NotFound from "./Pages/404";
+import AddProduct from "./Pages/AddProduct";
+import Cart from "./Pages/Cart";
+import Loading from "./Component/Loading";
+
 
 function App() {
   return (
@@ -10,7 +14,8 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/your-cart" element={<Cart />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

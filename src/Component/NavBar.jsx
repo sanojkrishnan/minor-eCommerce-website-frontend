@@ -1,50 +1,84 @@
-import React from 'react'
+
+import { Link } from "react-router-dom";
 
 function NavBar() {
+
   return (
     <>
-<nav class="relative bg-blue-500 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
-  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-    <div class="relative flex h-16 items-center justify-between">
-      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-      </div>
-      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-        <div className=' w-9'>
-            <img className='rounded-full' src='/Gemini_Generated_Image_ewat61ewat61ewat.png' alt='logo' />
-        </div>
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white">Team</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white">Projects</a>
-            <a href="#" class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white">Calendar</a>
+      <nav class="relative p-3 bg-blue-500 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px">
+        <div class=" w-full px-2 sm:px-6 lg:px-8">
+          <div class="relative flex h-16 items-center justify-between">
+            <div class="flex  items-center justify-between">
+              <div className=" w-15">
+                <img
+                  className="rounded-full"
+                  src="/Gemini_Generated_Image_ewat61ewat61ewat.png"
+                  alt="logo"
+                />
+              </div>
+              <div class="hidden sm:ml-6 sm:block">
+                <div class="flex space-x-4">
+                  <a
+                    href="#"
+                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
+                  >
+                    Category
+                  </a>
+                  <a
+                    href="#"
+                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
+                  >
+                    Sort In
+                  </a>
+                  &nbsp;
+                  &nbsp;
+                  &nbsp;
+                  <Link to={"/add-product"}
+                    href="#"
+                    class="rounded-md px-3 py-2 text-sm font-medium bg-blue-400 text-gray-900 hover:bg-white/5 hover:text-white"
+                  >
+                    Add Product
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div
+                type="button"
+                className="relative rounded-full pl-2 pr-20 border-white"
+              >
+                <input
+                  className="p-2 font-bold border-0 outline-0 text-white hover:text-black"
+                  type="text"
+                  placeholder="Search Here..."
+                />
+              </div>
+
+              <Link to={"/your-cart"}>
+                <svg
+                  class="w-8 h-8 me-1.5 text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="white"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                  />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-        <button type="button" class="relative rounded-full p-1 text-gray-200 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
-          <span class="absolute -inset-1.5"></span>
-          <span class="sr-only">View notifications</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
-            <path d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </button>
-
-
-        <el-dropdown class="relative ml-3">
-          <button class="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
-            <span class="absolute -inset-1.5"></span>
-            <span class="sr-only">Open user menu</span>
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10" />
-          </button>  
-        </el-dropdown>
-      </div>
-    </div>
-  </div>
-
-
-</nav>
+      </nav>
     </>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;
