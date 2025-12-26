@@ -6,6 +6,7 @@ import NotFound from "./Pages/404";
 import AddProduct from "./Pages/AddProduct";
 import Cart from "./Pages/Cart";
 import Loading from "./Component/Loading";
+import ProductDescription from "./Pages/ProductDescription";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/your-cart" element={<Cart />} />
+        <Route path="/product/:id" element={<ProductDescription />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

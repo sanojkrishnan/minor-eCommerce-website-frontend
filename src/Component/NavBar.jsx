@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 function NavBar() {
 
   return (
-    <>
-      <nav class="relative p-3 bg-blue-500 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px">
-        <div class=" w-full px-2 sm:px-6 lg:px-8">
-          <div class="relative flex h-16 items-center justify-between">
-            <div class="flex  items-center justify-between">
+    <div className=" py-9 ">
+      <nav className="fixed top-0 z-1 w-full p-3 bg-blue-500 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px">
+        <div className=" w-full px-2 sm:px-6 lg:px-8">
+          <div className="relative flex h-16 items-center justify-between">
+            <div className="flex  items-center justify-between">
               <div className=" w-15">
                 <img
                   className="rounded-full"
@@ -16,17 +16,17 @@ function NavBar() {
                   alt="logo"
                 />
               </div>
-              <div class="hidden sm:ml-6 sm:block">
-                <div class="flex space-x-4">
+              <div className="hidden sm:ml-6 sm:block">
+                <div className="flex space-x-4">
                   <a
                     href="#"
-                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
                   >
                     Category
                   </a>
                   <a
                     href="#"
-                    class="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
                   >
                     Sort In
                   </a>
@@ -35,14 +35,14 @@ function NavBar() {
                   &nbsp;
                   <Link to={"/add-product"}
                     href="#"
-                    class="rounded-md px-3 py-2 text-sm font-medium bg-blue-400 text-gray-900 hover:bg-white/5 hover:text-white"
+                    className="rounded-md px-3 py-2 text-sm font-medium bg-blue-400 text-gray-900 hover:bg-white/5 hover:text-white"
                   >
                     Add Product
                   </Link>
                 </div>
               </div>
             </div>
-            <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               <div
                 type="button"
                 className="relative rounded-full pl-2 pr-20 border-white"
@@ -56,7 +56,7 @@ function NavBar() {
 
               <Link to={"/your-cart"}>
                 <svg
-                  class="w-8 h-8 me-1.5 text-white"
+                  className="w-8 h-8 me-1.5 text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -77,7 +77,7 @@ function NavBar() {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 }
 

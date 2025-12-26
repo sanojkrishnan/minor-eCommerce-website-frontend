@@ -9,6 +9,8 @@ const createValidationSchema = Yup.object({
     category: Yup.string().required("Please select product category"),
     rating: Yup.number().required("Please enter the star rating"),
     price: Yup.number().required("Please add your price"),
+    offerPrice: Yup.number().required("Please add your price"),
+    offerPercentage: Yup.number().required("Please add your price"),
     imageFile: Yup.mixed()
     .required("An image is required")
     .test(

@@ -1,4 +1,4 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import React from "react";
 import createValidationSchema from "../schema/ValidationSchema";
 
@@ -7,6 +7,8 @@ const initialValues = {
   category: "",
   rating: "",
   price: "",
+  offerPrice: "",
+  offerPercentage: "",
   image: null,
 };
 
@@ -35,7 +37,7 @@ const FileInput = ({ field, form }) => {
 function AddProduct() {
   return (
     <div className=" h-120 w-full flex items-center justify-center ">
-      <div className="border-gray-400 h-auto mt-30 shadow-2xl bg-linear-to-br from-gray-300 to-white p-6 w-100 rounded-lg ">
+      <div className="border-gray-400 z-1 h-auto mt-30 shadow-2xl bg-linear-to-br from-gray-300 to-white p-6 w-100 rounded-lg ">
         <Formik
           initialValues={initialValues}
           validationSchema={createValidationSchema}
@@ -121,12 +123,50 @@ function AddProduct() {
                     type="number"
                     className="border pl-2 p-2 w-full rounded-md"
                     name="price"
-                    placeholder="Add Rating"
+                    placeholder="MRP Price"
                   />
                 </small>
                 <br />
                 {errors.rating && (
                   <small className="text-red-500">{errors.rating}</small>
+                )}
+              </div>
+
+
+
+
+<div className="mb-3 grid grid-cols-2">
+                <label htmlFor="offer-price" className="">
+                  offer price :
+                </label>
+                <small>
+                  <Field
+                    type="number"
+                    className="border pl-2 p-2 w-full rounded-md"
+                    name="offerPrice"
+                    placeholder="Add Offer Price"
+                  />
+                </small>
+                <br />
+                {errors.offerPrice && (
+                  <small className="text-red-500">{errors.offerPrice}</small>
+                )}
+              </div>
+<div className="mb-3 grid grid-cols-2">
+                <label htmlFor="offer-price" className="">
+                  offer percentage :
+                </label>
+                <small>
+                  <Field
+                    type="number"
+                    className="border pl-2 p-2 w-full rounded-md"
+                    name="offerPercentage"
+                    placeholder="Add Offer Percentage"
+                  />
+                </small>
+                <br />
+                {errors.offerPercentage && (
+                  <small className="text-red-500">{errors.offerPercentage}</small>
                 )}
               </div>
 
