@@ -34,9 +34,19 @@ const FileInput = ({ field, form }) => {
   );
 };
 
+
+
+
+
+
 function AddProduct() {
+
+
+  
+
+
   return (
-    <div className=" h-120 w-full flex items-center justify-center ">
+    <div className=" h-120 w-full flex items-start justify-center ">
       <div className="border-gray-400 z-1 h-auto mt-30 shadow-2xl bg-linear-to-br from-gray-300 to-white p-6 w-100 rounded-lg ">
         <Formik
           initialValues={initialValues}

@@ -1,8 +1,12 @@
 
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function NavBar() {
-
+  const [search , setSearch] = useState("");
+  const HandleChange = (e) => {
+    setSearch(e.target.value.toLowerCase());
+  }
   return (
     <div className=" py-9 ">
       <nav className="fixed top-0 z-1 w-full p-3 bg-blue-500 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px">
@@ -50,7 +54,8 @@ function NavBar() {
                 <input
                   className="p-2 font-bold border-0 outline-0 text-white hover:text-black"
                   type="text"
-                  placeholder="Search Here..."
+                  placeholder="Search Here..." 
+                  onChange={(e) => HandleChange(e)}
                 />
               </div>
 
