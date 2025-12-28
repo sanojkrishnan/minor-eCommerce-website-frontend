@@ -36,14 +36,14 @@ function Cart() {
   }
 
   return (
-    <>
+    <dic className="w-full">
       <h5 className="text-2xl pt-10 ml-10 font-semibold leading-none text-heading">
         Your Cart
       </h5>
       {carts.map((item) => (
         <CartCard cart={item} key={item._id} onUpdate={fetchCarts()} />
       ))}
-    </>
+    </dic>
   );
 }
 

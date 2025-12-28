@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
-import { MessageContext } from '../Context/StateContext'
+import { MessageContext } from '../Context/StateContext';
+
 
 function PopNotification() {
     const { viewMessage, setViewMessage } = useContext(MessageContext);

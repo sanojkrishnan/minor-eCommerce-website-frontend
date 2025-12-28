@@ -1,6 +1,8 @@
 import { Formik, Form, Field } from "formik";
-import React from "react";
+import React, { useContext } from "react";
 import createValidationSchema from "../schema/ValidationSchema";
+import productExp from "../API/prodects";
+import { MessageContext } from "../Context/StateContext";
 
 const initialValues = {
   productName: "",
@@ -24,7 +26,8 @@ const FileInput = ({ field, form }) => {
       />
 
       {form.values[field.name] && (
-        <img className="max-h-15 w-auto"
+        <img
+          className="max-h-15 w-auto"
           src={URL.createObjectURL(form.values[field.name])}
           alt="preview"
           width={150}
@@ -34,16 +37,30 @@ const FileInput = ({ field, form }) => {
   );
 };
 
-
-
-
-
-
 function AddProduct() {
+  const { setViewMessage } = useContext(MessageContext);
 
+  const handleSubmit = async (values, { resetForm }) => {
+    try {
+      const formData = new FormData();
+      formData.append("productName", values.productName);
+      formData.append("category", values.category);
+      formData.append("rating", values.rating);
+      formData.append("price", values.price);
+      formData.append("offerPrice", values.offerPrice);
+      formData.append("offerPercentage", values.offerPercentage);
+      if (values.image) formData.append("image", values.image);
 
-  
-
+      await productExp.post("/add-product", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setViewMessage("Product Is Ready To Sell!");
+      resetForm();
+    } catch (err) {
+      console.log(err);
+      setViewMessage("Something Went Wrong!");
+    }
+  };
 
   return (
     <div className=" h-120 w-full flex items-start justify-center ">
@@ -51,8 +68,9 @@ function AddProduct() {
         <Formik
           initialValues={initialValues}
           validationSchema={createValidationSchema}
+          onSubmit={handleSubmit}
         >
-          {({ errors }) => (
+          {({ errors, setFieldValue, values }) => (
             <Form>
               <div className="grid grid-cols-2">
                 <label htmlFor="productName" className="">
@@ -64,6 +82,8 @@ function AddProduct() {
                     className="border pl-2 p-2 w-full rounded-md"
                     name="productName"
                     placeholder="Enter the product name"
+                    value={values.productName}
+                    onChange={(e) => setFieldValue("productName", e.target.value)}
                   />
                 </small>
                 <br />
@@ -71,10 +91,6 @@ function AddProduct() {
                   <small className="text-red-500">{errors.productName}</small>
                 )}
               </div>
-
-
-
-
 
               <div className="mb-3 grid grid-cols-2">
                 <label htmlFor="category" className="form-label">
@@ -85,11 +101,14 @@ function AddProduct() {
                     as="select"
                     name="category"
                     className="border pl-2 p-2 w-full rounded-md"
+                    value={values.category}
+                    onChange={(e) => setFieldValue("category", e.target.value)}
                   >
                     <option value="">Select Category</option>
-                    <option value="smart phone">Smart Phone</option>
-                    <option value="laptop">Laptop</option>
-                    <option value="tv">TV</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="beauty">Beauty Product</option>
+                    <option value="clothes">Clothes</option>
+                    <option value="home">Home Appliances</option>
                   </Field>
                 </small>
                 <br />
@@ -97,10 +116,6 @@ function AddProduct() {
                   <small className="text-red-500">{errors.category}</small>
                 )}
               </div>
-
-
-
-
 
               <div className="mb-3 grid grid-cols-2">
                 <label htmlFor="rating" className="">
@@ -112,6 +127,13 @@ function AddProduct() {
                     className="border pl-2 p-2 w-full rounded-md"
                     name="rating"
                     placeholder="Add Rating"
+                    value={values.rating}
+                    onChange={(e) =>
+                      setFieldValue(
+                        "rating",
+                        Math.min(5, Math.max(0, Number(e.target.value) || 0))
+                      )
+                    }
                   />
                 </small>
                 <br />
@@ -119,10 +141,6 @@ function AddProduct() {
                   <small className="text-red-500">{errors.rating}</small>
                 )}
               </div>
-
-
-
-
 
               <div className="mb-3 grid grid-cols-2">
                 <label htmlFor="price" className="">
@@ -134,18 +152,17 @@ function AddProduct() {
                     className="border pl-2 p-2 w-full rounded-md"
                     name="price"
                     placeholder="MRP Price"
+                    value={values.price}
+                    onChange={(e) => setFieldValue("price", Number(e.target.value))}
                   />
                 </small>
                 <br />
-                {errors.rating && (
-                  <small className="text-red-500">{errors.rating}</small>
+                {errors.price && (
+                  <small className="text-red-500">{errors.price}</small>
                 )}
               </div>
 
-
-
-
-<div className="mb-3 grid grid-cols-2">
+              <div className="mb-3 grid grid-cols-2">
                 <label htmlFor="offer-price" className="">
                   offer price :
                 </label>
@@ -155,6 +172,8 @@ function AddProduct() {
                     className="border pl-2 p-2 w-full rounded-md"
                     name="offerPrice"
                     placeholder="Add Offer Price"
+                    value={values.offerPrice}
+                    onChange={(e) => setFieldValue("offerPrice", Number(e.target.value))}
                   />
                 </small>
                 <br />
@@ -162,7 +181,7 @@ function AddProduct() {
                   <small className="text-red-500">{errors.offerPrice}</small>
                 )}
               </div>
-<div className="mb-3 grid grid-cols-2">
+              <div className="mb-3 grid grid-cols-2">
                 <label htmlFor="offer-price" className="">
                   offer percentage :
                 </label>
@@ -172,33 +191,35 @@ function AddProduct() {
                     className="border pl-2 p-2 w-full rounded-md"
                     name="offerPercentage"
                     placeholder="Add Offer Percentage"
+                    value={values.offerPercentage}
+                    onChange={(e) => setFieldValue("offerPercentage", Number(e.target.value))}
                   />
                 </small>
                 <br />
                 {errors.offerPercentage && (
-                  <small className="text-red-500">{errors.offerPercentage}</small>
+                  <small className="text-red-500">
+                    {errors.offerPercentage}
+                  </small>
                 )}
               </div>
-
-
-
 
               <div>
-                <Field name="image"  component={FileInput} />
+                <Field name="image" component={FileInput} />
 
-                {errors.imageFile && (
-                  <small className="text-red-500">{errors.imageFile}</small>
+                {errors.image && (
+                  <small className="text-red-500">{errors.image}</small>
                 )}
               </div>
 
-
-
-
-
               <br />
               <br />
 
-              <button type="submit" className="bg-blue-500 w-full py-2 text-white rounded-md">Submit</button>
+              <button
+                type="submit"
+                className="bg-blue-500 w-full py-2 text-white rounded-md"
+              >
+                Submit
+              </button>
             </Form>
           )}
         </Formik>

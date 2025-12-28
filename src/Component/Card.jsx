@@ -3,7 +3,7 @@ import Stars from "./Stars";
 function Card({ product }) {
   return (
     <div>
-      <div className="w-full max-w-md mt-6 bg-gray-200 rounded-lg p-3 border-gray-400 rounded-base shadow-2xl shadow-gray-500 ">
+      <div className="w-full h-150 max-w-md mt-6 bg-gray-200 rounded-lg p-3 border-gray-400 rounded-base shadow-2xl shadow-gray-500 hover:scale-102 duration-300 ">
         <a href="#">
           <div className="relative h-1/2 bg-linear-to-t from-black to-transparent">
             <img
