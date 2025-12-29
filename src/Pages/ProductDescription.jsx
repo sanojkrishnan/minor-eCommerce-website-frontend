@@ -41,12 +41,12 @@ function ProductDescription() {
   }
 
   return (
-    <div>
-      <div className="bg-neutral-primary-soft p-2 md:flex justify-evenly  m-10 rounded-xl border-gray-400 bg-linear-to-br from-gray-300 to-gray-100 shadow-xl ">
+    <div className="w-full ">
+      <div className="bg-neutral-primary-soft p-2 md:flex justify-around w-full mt-10 rounded-xl border-gray-400 bg-linear-to-br from-gray-300 to-gray-100 shadow-xl ">
         <div className="p-4">
           <img
             className="rounded-xl lg:h-full "
-            src="/xcLa2kimeQeVMGWzQSjFRS-1200-80.jpg"
+            src={`http://localhost:3000/${product.imageUrl}`}
             alt=""
           />
         </div>

@@ -45,8 +45,8 @@ function CartCard({ cart, onUpdate }) {
                 <div className=" w-fit">
                   <img
                     className=" max-h-50 w-auto rounded-t-lg"
-                    src="/xcLa2kimeQeVMGWzQSjFRS-1200-80.jpg"
-                    alt="Neil image"
+                    src={`http://localhost:3000/${product.imageUrl}`}
+                    alt="product image"
                   />
                   <div>
                     <button className="text-center w-1/2 rounded-bl-md text-white bg-blue-500 bg-brand hover:bg-blue-600 shadow-xl font-medium  rounded-base text-sm px-3 py-2 focus:outline-none">
