@@ -13,17 +13,76 @@ function Home({ searchTerm }) {
   const [error, settError] = useState(false);
   const LOCAL_STORAGE_KEY = "products";
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [sortedProduct, setSortedProduct] = useState([]);
 
-  //paginattion
+  //pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage =8;
+  const postsPerPage = 8;
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
 
-  const pagedData = filteredProducts.slice(firstPostIndex, lastPostIndex);
+  const pagedData = sortedProduct.slice(firstPostIndex, lastPostIndex);
 
-  const { sorter } = useContext(SortContext);
+  const { sorter, initialSort } = useContext(SortContext);
+  console.log("sorter", sorter);
+
+  console.log("sortedProduct", sortedProduct);
+  console.log("filteredProducts", filteredProducts);
+
+  //-----------------------------------sorting
+
+  useEffect(() => {
+    if (sorter === initialSort) {
+      setSortedProduct(filteredProducts);
+    } else {
+      if (sorter.lowerPrice >= 0 && sorter.higherPrice > sorter.lowerPrice) {
+        const priceSort = filteredProducts.filter(
+          (item) =>
+            item.offerPrice >= sorter.lowerPrice &&
+            item.offerPrice < sorter.higherPrice
+        );
+        setSortedProduct(priceSort);
+      }
+    }
+  }, [sorter, initialSort, filteredProducts]);
+
+
+  useEffect(() => {
+    if(sorter.sortBy === "name"){
+      let nameSort = [...sortedProduct].sort((a,b) => a.productName.localeCompare(b.productName))
+      console.log("name sort",nameSort);
+      
+    }
+  }, [sorter, sortedProduct])
+
+
+  // useEffect(() => {
+  //  if (sorter.sortBy === "name") {
+  //       let nameSort = [...sortedProduct].sort((a, b) =>
+  //         a.productName.localeCompare(b.productName)
+  //       );
+  //       setSortedProduct(nameSort);
+  //     }
+  //     if (sorter.sortBy === "lowerPrice") {
+  //       let lowerPriceSort = [...sortedProduct].sort(
+  //         (a, b) => a.offerPrice - b.offerPrice
+  //       );
+  //       setSortedProduct(lowerPriceSort);
+  //     }
+  //     if (sorter.sortBy === "higherPrice") {
+  //       let lowerPriceSort = [...sortedProduct].sort(
+  //         (a, b) => b.offerPrice - a.offerPrice
+  //       );
+  //       setSortedProduct(lowerPriceSort);
+  //     }
+  //     if (sorter.category !== "all") {
+  //       const sortedCategory = sortedProduct.filter(
+  //         (item) => item.category === sorter.category
+  //       );
+  //       setSortedProduct(sortedCategory);
+  //     }
+  // }, [sorter, initialSort, filteredProducts, sortedProduct]);
 
   //search functionality
   useEffect(() => {
@@ -41,10 +100,12 @@ function Home({ searchTerm }) {
     }
   }, [searchTerm, products]);
 
+  //fetching data from backend --------------------
+
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const prod = await productExp.get("/");
+        const prod = await productExp.get(`/`);
         if (prod) {
           setProducts(prod.data); // Extract data from the Axios response
         }
@@ -98,7 +159,7 @@ function Home({ searchTerm }) {
         </div>
         <div className="fixed">
           <Pagination
-            totalPosts={filteredProducts.length}
+            totalPosts={sortedProduct.length}
             postsPerPage={postsPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}

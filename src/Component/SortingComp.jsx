@@ -33,9 +33,9 @@ function SortingComp() {
 
   return (
     <div className="sorting w-170 h-full ">
-      <div className="price fixed z-20 left-0 mt-3 h-full max-w-120 p-8 pt-8 font-semibold text-white bg-linear-to-b from-blue-500 via-purple-500 to-pink-500">
+      <div className="price fixed z-20 left-0 h-full max-w-120 p-8 font-semibold text-white bg-linear-to-b from-blue-500 via-purple-500 to-pink-500">
         <form onSubmit={handleSubmit}>
-          <h4 className="text-2xl mt-20 font-bold m-2 mb-8">Price Range</h4>
+          <h4 className="text-2xl mt-6 font-bold m-2 mb-8">Price Range</h4>
           <div className="flex justify-between">
             <label className="ml-2" htmlFor="lower">
               Lower Price :
@@ -135,7 +135,7 @@ function SortingComp() {
             </div>
           </div>
 
-          <div className="mt-20">
+          <div className="mt-10">
             <div className=" text-white text-2xl font-bold mb-8" type="button">
               Category
             </div>
