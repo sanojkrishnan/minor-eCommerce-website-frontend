@@ -14,6 +14,8 @@ function Home({ searchTerm }) {
   const LOCAL_STORAGE_KEY = "products";
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortedProduct, setSortedProduct] = useState([]);
+  const [nameSortedProduct, setNameSortedProduct] = useState([]);
+  const [categorySortedProduct, setCategorySortedProduct] = useState([]);
 
   //pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,13 +24,10 @@ function Home({ searchTerm }) {
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
 
-  const pagedData = sortedProduct.slice(firstPostIndex, lastPostIndex);
+  const pagedData = categorySortedProduct.slice(firstPostIndex, lastPostIndex);
 
   const { sorter, initialSort } = useContext(SortContext);
   console.log("sorter", sorter);
-
-  console.log("sortedProduct", sortedProduct);
-  console.log("filteredProducts", filteredProducts);
 
   //-----------------------------------sorting
 
@@ -47,43 +46,37 @@ function Home({ searchTerm }) {
     }
   }, [sorter, initialSort, filteredProducts]);
 
+  useEffect(() => {
+    let namePriceSort = [...sortedProduct];
+
+    if (sorter.sortBy === "name") {
+      namePriceSort.sort((a, b) =>
+        (a.productName || "").localeCompare(b.productName || "")
+      );
+    } else if (sorter.sortBy === "descending") {
+      namePriceSort.sort((a, b) => a.offerPrice - b.offerPrice);
+    } else if (sorter.sortBy === "ascending") {
+      namePriceSort.sort((a, b) => b.offerPrice - a.offerPrice);
+    }
+
+    setNameSortedProduct(namePriceSort);
+  }, [sorter, sortedProduct]);
 
   useEffect(() => {
-    if(sorter.sortBy === "name"){
-      let nameSort = [...sortedProduct].sort((a,b) => a.productName.localeCompare(b.productName))
-      console.log("name sort",nameSort);
-      
+    // If "all" is selected or no category selected
+    if (
+      !sorter.category ||
+      sorter.category.length === 0 ||
+      sorter.category.includes("all")
+    ) {
+      setCategorySortedProduct(nameSortedProduct);
+    } else {
+      const categoryFiltered = nameSortedProduct.filter((item) =>
+        sorter.category.includes(item.category)
+      );
+      setCategorySortedProduct(categoryFiltered);
     }
-  }, [sorter, sortedProduct])
-
-
-  // useEffect(() => {
-  //  if (sorter.sortBy === "name") {
-  //       let nameSort = [...sortedProduct].sort((a, b) =>
-  //         a.productName.localeCompare(b.productName)
-  //       );
-  //       setSortedProduct(nameSort);
-  //     }
-  //     if (sorter.sortBy === "lowerPrice") {
-  //       let lowerPriceSort = [...sortedProduct].sort(
-  //         (a, b) => a.offerPrice - b.offerPrice
-  //       );
-  //       setSortedProduct(lowerPriceSort);
-  //     }
-  //     if (sorter.sortBy === "higherPrice") {
-  //       let lowerPriceSort = [...sortedProduct].sort(
-  //         (a, b) => b.offerPrice - a.offerPrice
-  //       );
-  //       setSortedProduct(lowerPriceSort);
-  //     }
-  //     if (sorter.category !== "all") {
-  //       const sortedCategory = sortedProduct.filter(
-  //         (item) => item.category === sorter.category
-  //       );
-  //       setSortedProduct(sortedCategory);
-  //     }
-  // }, [sorter, initialSort, filteredProducts, sortedProduct]);
-
+  }, [nameSortedProduct, sorter]);
   //search functionality
   useEffect(() => {
     if (searchTerm) {
@@ -159,7 +152,7 @@ function Home({ searchTerm }) {
         </div>
         <div className="fixed">
           <Pagination
-            totalPosts={sortedProduct.length}
+            totalPosts={categorySortedProduct.length}
             postsPerPage={postsPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
