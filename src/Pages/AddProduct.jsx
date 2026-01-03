@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import createValidationSchema from "../schema/ValidationSchema";
 import productExp from "../API/prodects";
 import { MessageContext } from "../Context/StateContext";
+import toast from "react-hot-toast";
 
 const initialValues = {
   productName: "",
@@ -55,10 +56,12 @@ function AddProduct() {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setViewMessage("Product Is Ready To Sell!");
+      toast.success("Product Added Successfully!");
       resetForm();
     } catch (err) {
       console.log(err);
       setViewMessage("Something Went Wrong!");
+      toast.error(err.message);
     }
   };
 

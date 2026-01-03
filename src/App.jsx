@@ -9,6 +9,7 @@ import ProductDescription from "./Pages/ProductDescription";
 import PopNotification from "./Component/PopNotification";
 import SortingComp from "./Component/SortingComp";
 import StateProvider from "./Context/StateProvider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +37,7 @@ function App() {
           </Routes>
         </div>
         <PopNotification />
+        <Toaster />
       </StateProvider>
     </>
   );

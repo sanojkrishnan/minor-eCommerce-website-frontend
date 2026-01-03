@@ -79,7 +79,7 @@ function Home({ searchTerm }) {
   }, [nameSortedProduct, sorter]);
   //search functionality
   useEffect(() => {
-    if (searchTerm) {
+    if (searchTerm.trim() !== "") {
       const filtered = products.filter((item) => {
         return (
           item.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
