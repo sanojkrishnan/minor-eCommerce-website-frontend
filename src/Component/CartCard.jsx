@@ -30,7 +30,7 @@ function CartCard({ cart, onUpdate }) {
     onUpdate && onUpdate();
   };
 
-  const handleDelete = async () => {
+  const handleDelete =async () => {
     await productExp.delete(`/cart/${cart._id}`);
     onUpdate && onUpdate();
   };

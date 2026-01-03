@@ -1,5 +1,5 @@
 import { Formik, Form, Field } from "formik";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import createValidationSchema from "../schema/ValidationSchema";
 import productExp from "../API/prodects";
 import { MessageContext } from "../Context/StateContext";
@@ -38,31 +38,43 @@ const FileInput = ({ field, form }) => {
   );
 };
 
+const initialPrice = {
+  price: 0,
+  offerPrice: 0,
+};
+
 function AddProduct() {
   const { setViewMessage } = useContext(MessageContext);
+  const [price, setPrice] = useState(initialPrice);
 
+console.log(price);
   const handleSubmit = async (values, { resetForm }) => {
-    try {
-      const formData = new FormData();
-      formData.append("productName", values.productName);
-      formData.append("category", values.category);
-      formData.append("rating", values.rating);
-      formData.append("price", values.price);
-      formData.append("offerPrice", values.offerPrice);
-      formData.append("offerPercentage", values.offerPercentage);
-      if (values.image) formData.append("image", values.image);
+    if (price.offerPrice < price.price) {
+      try {
+        const formData = new FormData();
+        formData.append("productName", values.productName);
+        formData.append("category", values.category);
+        formData.append("rating", values.rating);
+        formData.append("price", values.price);
+        formData.append("offerPrice", values.offerPrice);
+        formData.append("offerPercentage", values.offerPercentage);
+        if (values.image) formData.append("image", values.image);
 
-      await productExp.post("/add-product", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setViewMessage("Product Is Ready To Sell!");
-      toast.success("Product Added Successfully!");
-      resetForm();
-    } catch (err) {
-      console.log(err);
-      setViewMessage("Something Went Wrong!");
-      toast.error(err.message);
+        await productExp.post("/add-product", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        });
+        setViewMessage("Product Is Ready To Sell!");
+        toast.success("Product Added Successfully!");
+        resetForm();
+      } catch (err) {
+        console.log(err);
+        setViewMessage("Something Went Wrong!");
+        toast.error(err.message);
+      }
+    } else {
+      setViewMessage("The price should be larger than offer price");
     }
+    console.log(price);
   };
 
   return (
@@ -86,7 +98,9 @@ function AddProduct() {
                     name="productName"
                     placeholder="Enter the product name"
                     value={values.productName}
-                    onChange={(e) => setFieldValue("productName", e.target.value)}
+                    onChange={(e) =>
+                      setFieldValue("productName", e.target.value)
+                    }
                   />
                 </small>
                 <br />
@@ -156,7 +170,10 @@ function AddProduct() {
                     name="price"
                     placeholder="MRP Price"
                     value={values.price}
-                    onChange={(e) => setFieldValue("price", Number(e.target.value))}
+                    onChange={(e) => {
+                      setPrice(price.price === e.target.value);
+                      setFieldValue("price", Number(e.target.value));
+                    }}
                   />
                 </small>
                 <br />
@@ -176,7 +193,10 @@ function AddProduct() {
                     name="offerPrice"
                     placeholder="Add Offer Price"
                     value={values.offerPrice}
-                    onChange={(e) => setFieldValue("offerPrice", Number(e.target.value))}
+                    onChange={(e) => {
+                      setPrice(price.offerPrice === e.target.value);
+                      setFieldValue("offerPrice", Number(e.target.value));
+                    }}
                   />
                 </small>
                 <br />
@@ -195,7 +215,9 @@ function AddProduct() {
                     name="offerPercentage"
                     placeholder="Add Offer Percentage"
                     value={values.offerPercentage}
-                    onChange={(e) => setFieldValue("offerPercentage", Number(e.target.value))}
+                    onChange={(e) =>
+                      setFieldValue("offerPercentage", Number(e.target.value))
+                    }
                   />
                 </small>
                 <br />

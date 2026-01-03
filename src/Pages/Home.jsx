@@ -39,7 +39,7 @@ function Home({ searchTerm }) {
         const priceSort = filteredProducts.filter(
           (item) =>
             item.offerPrice >= sorter.lowerPrice &&
-            item.offerPrice < sorter.higherPrice
+            item.offerPrice <= sorter.higherPrice
         );
         setSortedProduct(priceSort);
       }
@@ -53,9 +53,9 @@ function Home({ searchTerm }) {
       namePriceSort.sort((a, b) =>
         (a.productName || "").localeCompare(b.productName || "")
       );
-    } else if (sorter.sortBy === "descending") {
-      namePriceSort.sort((a, b) => a.offerPrice - b.offerPrice);
     } else if (sorter.sortBy === "ascending") {
+      namePriceSort.sort((a, b) => a.offerPrice - b.offerPrice);
+    } else if (sorter.sortBy === "descending") {
       namePriceSort.sort((a, b) => b.offerPrice - a.offerPrice);
     }
 
